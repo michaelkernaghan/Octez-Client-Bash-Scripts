@@ -16,10 +16,11 @@ Follow these steps to run the scripts:
 
 1. Clone this repository to your local machine.
 2. Navigate to the project root directory using the command line.
-3. Make the desired script executable by running `chmod +x <script>.sh`, replacing `<script>.sh` with the script name you want to run.
-4. Run the script with `./<script>.sh`, again replacing `<script>.sh` with the name of the script.
+3. Edit the addresses in the script to use your stakers and baker
+4. Make the desired script executable by running `chmod +x <script>.sh`, replacing `<script>.sh` with the script name you want to run.
+5. Run the script with `./<script>.sh`, again replacing `<script>.sh` with the name of the script.
 
-Please note that these scripts assume that the `octez-client` and `octez-admin-client` commands are available in your PATH. If you encounter any issues, please ensure these commands are correctly installed and configured on your system.
+Please note that these scripts assume that the `octez-client` and `octez-admin-client` commands are available in your PATH. If you encounter any issues, please make sure these commands are correctly installed and set on your system.
 
 ## Contributing
 
