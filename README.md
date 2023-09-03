@@ -29,3 +29,5 @@ Contributions are always welcome! If you have any suggestions, bug reports, or f
 ## License
 
 These scripts are released under the MIT License.
+
+![adaptive_issuance__1__720](https://github.com/michaelkernaghan/Octez-Client-Bash-Scripts/assets/78441942/07567b03-d706-4068-9c79-8f236f760f4f)
