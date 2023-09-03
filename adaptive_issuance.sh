@@ -12,14 +12,27 @@
 source ./common.sh
 
 # Print the balances of the staker addresses
-echo -e "${COLORS[BLUE]}Stakers${COLORS[NC]}"
 for address in "${staker_addresses[@]}"; do
     balance=$(/home/mike/tezos/octez-client get balance for "$address")
     echo -e "${COLORS[GREEN]}The balance of ${COLORS[YELLOW]}$address ${COLORS[GREEN]}is ${COLORS[NC]}$balance."
 done
+# Print the balance of the baker address
+baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
+echo -e "${COLORS[GREEN]}The balance of the baker ${COLORS[YELLOW]}$baker_address ${COLORS[GREEN]}is ${COLORS[NC]}$baker_balance."
 
 # Change to the Tezos root directory
 cd $HOME/tezos/
+echo -e "\n"
+
+# Print the staked balances of the staker addresses
+for address in "${staker_addresses[@]}"; do
+    staked_balance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/contracts/${address}/staked_balance)
+    echo -e "${COLORS[GREEN]}The staked balance of ${COLORS[YELLOW]}$address ${COLORS[GREEN]}is ${COLORS[NC]}$staked_balance."
+done
+
+# Print the staked balances of the baker address
+baker_staked_balance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/contracts/${baker_address}/staked_balance)
+echo -e "${COLORS[GREEN]}The staked balance of the baker ${COLORS[YELLOW]}$baker_address ${COLORS[GREEN]}is ${COLORS[NC]}$baker_staked_balance."
 
 # Get the current cycle
 cycle=$(./octez-admin-client rpc get /chains/main/blocks/head | jq .metadata.level_info.cycle)
