@@ -52,3 +52,18 @@ echo $active_staking_parameters | jq
 echo -e "\n${COLORS[YELLOW]}Pending Staking Parameters${COLORS[NC]}"
 pending_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/pending_staking_parameters)
 echo $pending_staking_parameters | jq
+
+# Fetch the baking rights for the current cycle for the specified Tezos address.
+baking_rights=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/helpers/baking_rights\?cycle=${cycle}\&delegate=${baker_address}\&max_round=0  | jq 'map({level: .level, estimated_time: .estimated_time})')
+echo -e "\n${COLORS[BLUE]}The baking rights for current cycle ${COLORS[RED]}${cycle}${COLORS[NC]} for baker ${COLORS[YELLOW]}${baker_address}${COLORS[BLUE]} are: ${COLORS[NC]}${baking_rights}"
+
+# Calculate the next cycle
+next_cycle=$((cycle+1))
+
+# Ensure that the next cycle is a natural number before making the rpc call.
+if [[ "$next_cycle" =~ ^[0-9]+$ ]]
+then
+    # Fetch the baking rights for the next cycle for the baker Tezos address.
+    next_baking_rights=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/helpers/baking_rights\?cycle=${next_cycle}\&delegate=${baker_address}\&max_round=0 | jq 'map({level: .level, estimated_time: .estimated_time})')
+    echo -e "\n${COLORS[BLUE]}The baking rights for next cycle ${COLORS[RED]}${next_cycle}${COLORS[NC]} for the baker ${COLORS[YELLOW]}${baker_address}${COLORS[BLUE]} are: \n${COLORS[NC]}${next_baking_rights}"
+fi
