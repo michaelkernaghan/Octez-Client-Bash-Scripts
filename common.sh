@@ -5,14 +5,14 @@ declare -A COLORS=(
      [GREEN]='\033[0;32m'
      [BLUE]='\033[1;34m'
      [YELLOW]='\033[1;33m'
-     [LIGHT_RED]='\033[1;31m'
+     [PURPLE]='\033[0;35m'
      [NC]='\033[0m' # No Color
  )
 # List of octez addresses
 staker_addresses=(
-"tz1fWL6BuqXBPwtgce2qZQw3uEhGqvcZh84Y"
-"tz1TrsUtPaKFYwnNzxavGaSnsH72TNJBfm42"
-"tz1cuCWeqsozFncacrT3oUqrD9fAtGcqDFiD"
+"tz1XDL5EuVrKXxa6bawcA7oRfLBgvH2uWtWi"
+"tz1iwkGcTgtvLNe2p1hgZDjT44AEnqVECx9h"
+"tz1QZZHTf8icGPUwiTCNd6n7zeAK8ZoU4QQo"
 )
 
 # Target octez address
