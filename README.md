@@ -25,42 +25,59 @@ Please note that these scripts assume that the `octez-client` and `octez-admin-c
 ## Example output
 
 ```bash
-Stakers
-The balance of tz1fWL6BuqXBPwtgce2qZQw3uEhGqvcZh84Y is 11994.997956 ꜩ.
-The balance of tz1TrsUtPaKFYwnNzxavGaSnsH72TNJBfm42 is 17995.997956 ꜩ.
-The balance of tz1cuCWeqsozFncacrT3oUqrD9fAtGcqDFiD is 17995.997956 ꜩ.
+Cycle:22 Level:182987
+Levels to next cycle: 5430
+Minutes to next cycle: 724
 
-Current cycle is 17
+tz1XDL5EuVrKXxa6bawcA7oRfLBgvH2uWtWi
+Liquid balance: 7007.997155 ꜩ.
+Staked balance: 31905.889907 ꜩ.
+Full balance :  38913.887062 ꜩ.
 
-Baker Delegation
+tz1iwkGcTgtvLNe2p1hgZDjT44AEnqVECx9h
+Liquid balance: 4004.997695 ꜩ.
+Staked balance: 31905.889907 ꜩ.
+Full balance :  35910.887602 ꜩ.
+
+tz1QZZHTf8icGPUwiTCNd6n7zeAK8ZoU4QQo
+Liquid balance: 4005.933173 ꜩ.
+Staked balance: 31905.889907 ꜩ.
+Full balance :  35911.82308 ꜩ.
+
+Baker: tz1hyVeFrkoDG1eFTaQZoYKC93hGUdRVes4D
+Liquid balance: 224361.708437 ꜩ.
+Staked balance: 27745.628258 ꜩ.
+Full balance :  252107.336695 ꜩ.
+
+Baker Data
 {
-  "full_balance": "124024997346",
-  "current_frozen_deposits": "11001000000",
-  "frozen_deposits": "0",
-  "staking_balance": "172011991214",
+  "full_balance": "252107336695",
+  "current_frozen_deposits": "123463297981",
+  "frozen_deposits": "11001000000",
+  "staking_balance": "440800919551",
   "delegated_contracts": [
+    "tz1iwkGcTgtvLNe2p1hgZDjT44AEnqVECx9h",
     "tz1hyVeFrkoDG1eFTaQZoYKC93hGUdRVes4D",
     "tz1fWL6BuqXBPwtgce2qZQw3uEhGqvcZh84Y",
     "tz1cuCWeqsozFncacrT3oUqrD9fAtGcqDFiD",
-    "tz1TrsUtPaKFYwnNzxavGaSnsH72TNJBfm42"
+    "tz1XDL5EuVrKXxa6bawcA7oRfLBgvH2uWtWi",
+    "tz1TrsUtPaKFYwnNzxavGaSnsH72TNJBfm42",
+    "tz1QZZHTf8icGPUwiTCNd6n7zeAK8ZoU4QQo",
+    "tz1KuUjXyFppuhyx4MZJkedZt75Gqw57tY8c"
   ],
-  "delegated_balance": "47986993868",
+  "delegated_balance": "188693582856",
   "deactivated": false,
-  "grace_period": 21,
-  "voting_power": "91506498019",
+  "grace_period": 26,
+  "voting_power": "280528500013",
   "remaining_proposals": 20,
   "active_consensus_key": "tz1hyVeFrkoDG1eFTaQZoYKC93hGUdRVes4D"
 }
-Pending Staking Parameters
-[
-  {
-    "cycle": 20,
-    "parameters": {
-      "limit_of_staking_over_baking_millionth": 5000000,
-      "edge_of_baking_over_staking_billionth": 1000000000
-    }
-  }
-]
+
+Active Staking Parameters
+{
+  "limit_of_staking_over_baking_millionth": 5000000,
+  "edge_of_baking_over_staking_billionth": 150000000
+}
 ```
 
 ## Contributing
