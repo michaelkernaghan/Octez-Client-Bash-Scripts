@@ -3,15 +3,8 @@
 # adaptive_issuance.sh
 # Michael Kernaghan
 #-----------------------------------------------------------
-# The script first disables the Tezos client disclaimer, then defines some colors for output formatting.
-# It then lists the staker addresses and the baker address, and prints the balances of the staker addresses.
-# The script then changes to the Tezos root directory, gets the current cycle, and prints it.
-# Finally, the script gets and prints the baker delegation information and the pending staking parameters.
-# ----------------------------------------------------------
 
 source ./common.sh
-
-# Change to the Tezos root directory
 cd $HOME/tezos/
 
 # Get the .metadata.level_info data
@@ -35,6 +28,7 @@ for address in "${staker_addresses[@]}"; do
     full_balance=$(/home/mike/tezos/octez-client get full balance for "$address")
     echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$full_balance."
 done
+
 # Print the balance of the baker address
 baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
 echo -e "\n${COLORS[PURPLE]}Baker: ${COLORS[YELLOW]}$baker_address${COLORS[NC]}"
