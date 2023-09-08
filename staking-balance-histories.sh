@@ -29,8 +29,11 @@ echo "$cycle, $level, $baker_address, $baker_staked_balance" >>$baker_output_fil
 
 echo -e "\n${COLORS[PURPLE]}Staker Staking Balance History${COLORS[NC]}"
 staker_stake_balance_history=$(cat /home/mike/tezos/staker_staked_balances.csv)
+cp /home/mike/tezos/staker_staked_balances.csv $HOME/Octez-Client-Bash-Scripts
+
 echo -e "${staker_stake_balance_history}"
 
 echo -e "\n${COLORS[PURPLE]}Baker Staking Balance History${COLORS[NC]}"
 baker_stake_balance_history=$(cat /home/mike/tezos/baker_staked_balances.csv)
+cp /home/mike/tezos/baker_staked_balances.csv $HOME/Octez-Client-Bash-Scripts
 echo -e "${baker_stake_balance_history}"
