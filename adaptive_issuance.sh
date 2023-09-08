@@ -40,6 +40,24 @@ echo -e "\n${COLORS[PURPLE]}Active Staking Parameters${COLORS[NC]}"
 active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/active_staking_parameters)
 echo $active_staking_parameters | jq
 
+# Get issuance data
+echo -e "\n${COLORS[BLUE]}Issuance Data${COLORS[NC]}"
+current_yearly_rate=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate/)
+echo -e "\n${COLORS[PURPLE]}Current Yearly Rate${COLORS[NC]}"
+echo $current_yearly_rate | jq
+
+current_yearly_rate_exact=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate_exact/)
+echo -e "\n${COLORS[PURPLE]}Current Yearly Rate Exact${COLORS[NC]}"
+echo $current_yearly_rate_exact | jq 
+
+issuance_per_minute=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/issuance_per_minute)
+echo -e "\n${COLORS[PURPLE]}Issuance Per Minute${COLORS[NC]}"
+echo $issuance_per_minute | jq 
+
+expected_issuance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/expected_issuance)
+echo -e "\n${COLORS[PURPLE]}Expected Issuance${COLORS[NC]}"
+echo $expected_issuance | jq 
+
 # Get the pending staking parameters
 # echo -e "\n${COLORS[YELLOW]}Pending Staking Parameters${COLORS[NC]}"
 # pending_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/pending_staking_parameters)
