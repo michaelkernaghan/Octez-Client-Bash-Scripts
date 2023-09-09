@@ -41,6 +41,14 @@ active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/hea
 echo $active_staking_parameters | jq
 
 # Get issuance data
+# The increase in both the `baking_reward_fixed_portion` and `liquidity_baking_subsidy` each cycle is due to the inflationary nature of the Tezos blockchain.
+# 1. `baking_reward_fixed_portion`: This is the fixed portion of the reward given to bakers (validators) for creating new blocks. The increase in this reward incentivizes more participants
+# to take part in the baking process, thereby helping to secure the network.
+# 2. `liquidity_baking_subsidy`: This is a subsidy provided to liquidity providers who contribute to the liquidity of the Tezos blockchain.
+# The increase in this subsidy is designed to incentivize more users to provide liquidity, which helps to increase the overall liquidity and stability of the Tezos ecosystem.
+# The increase in these rewards each cycle is also a way to compensate for the increasing complexity and resource requirements of participating in the baking and liquidity provision processes.
+# As the blockchain grows and evolves, these processes become more resource-intensive, and the rewards are increased to ensure that it remains profitable for participants.
+
 echo -e "\n${COLORS[BLUE]}Issuance Data${COLORS[NC]}"
 current_yearly_rate=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate/)
 echo -e "\n${COLORS[PURPLE]}Current Yearly Rate${COLORS[NC]}"
