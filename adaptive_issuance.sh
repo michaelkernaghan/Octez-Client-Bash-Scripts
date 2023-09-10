@@ -20,6 +20,11 @@ for address in "${staker_addresses[@]}"; do
     echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$full_balance."
 done
 
+# Get the contract staked balance
+echo -e "\n${COLORS[BLUE]}Contract Staked Balance for ${COLORS[YELLOW]}${staker_addresses[0]}${COLORS[NC]}"
+contract_staked_balance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/contracts/${staker_addresses[0]}/staked_balance)
+echo $contract_staked_balance | jq
+
 # Print the balance of the baker address
 baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
 echo -e "\n${COLORS[PURPLE]}Baker: ${COLORS[YELLOW]}$baker_address${COLORS[NC]}"
@@ -39,6 +44,16 @@ echo "$baker_delegation_json_output" | jq
 echo -e "\n${COLORS[PURPLE]}Active Staking Parameters${COLORS[NC]}"
 active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/active_staking_parameters)
 echo $active_staking_parameters | jq
+
+# Get the total_frozen_stake
+echo -e "\n${COLORS[PURPLE]}total_frozen_stake${COLORS[NC]}"
+total_frozen_stake=$(./octez-admin-client rpc get /chains/main/blocks/head/context/total_frozen_stake)
+echo $total_frozen_stake | jq
+
+# Get the adaptive_issuance_launch_cycle
+echo -e "\n${COLORS[PURPLE]}adaptive_issuance_launch_cycle${COLORS[NC]}"
+active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/adaptive_issuance_launch_cycle)
+echo $adaptive_issuance_launch_cycle | jq
 
 # Get issuance data
 # The increase in both the `baking_reward_fixed_portion` and `liquidity_baking_subsidy` each cycle is due to the inflationary nature of the Tezos blockchain.
