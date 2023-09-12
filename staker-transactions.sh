@@ -23,9 +23,8 @@ staker_address="tz1XDL5EuVrKXxa6bawcA7oRfLBgvH2uWtWi"
 head_level=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/header | jq '.level')
 
 # Calculate the start level. We are interested in the last 250 blocks, so we subtract 50 from the head level.
-#start_level=$((head_level - 250))
-start_level=175250
-temp_head_level=175350
+start_level=$((head_level - 250))
+
 # Initialize a counter for the number of blocks where transactions were found
 transaction_blocks=0
 
@@ -36,7 +35,7 @@ transaction_levels=()
 declare -A transaction_metadata
 
 # Start a loop that will iterate from the head level to the start level.
-for ((level = temp_head_level; level >= start_level; level--)); do
+for ((level = head_level; level >= start_level; level--)); do
 
     # Display the level being checked
     echo -e "${COLORS[BLUE]}Level: $level${COLORS[NC]}"

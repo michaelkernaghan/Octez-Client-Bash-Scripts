@@ -40,6 +40,11 @@ echo -e "\n${COLORS[BLUE]}Baker Data${COLORS[NC]}"
 baker_delegation_json_output=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/)
 echo "$baker_delegation_json_output" | jq
 
+# Get the pending staking parameters
+echo -e "\n${COLORS[YELLOW]}Pending Staking Parameters${COLORS[NC]}"
+pending_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/pending_staking_parameters)
+echo $pending_staking_parameters | jq
+
 # Get the active_staking_parameters
 echo -e "\n${COLORS[PURPLE]}Active Staking Parameters${COLORS[NC]}"
 active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/active_staking_parameters)
@@ -80,11 +85,6 @@ echo $issuance_per_minute | jq
 expected_issuance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/expected_issuance)
 echo -e "\n${COLORS[PURPLE]}Expected Issuance${COLORS[NC]}"
 echo $expected_issuance | jq 
-
-# Get the pending staking parameters
-# echo -e "\n${COLORS[YELLOW]}Pending Staking Parameters${COLORS[NC]}"
-# pending_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/pending_staking_parameters)
-# echo $pending_staking_parameters | jq
 
 # Fetch the baking rights for the current cycle for the specified Tezos address.
 # echo -e "\n${COLORS[PURPLE]}Baking Rights${COLORS[NC]}"
