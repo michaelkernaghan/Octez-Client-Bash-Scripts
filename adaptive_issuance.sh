@@ -18,6 +18,12 @@ for address in "${staker_addresses[@]}"; do
     echo -e "${COLORS[GREEN]}Staked balance: ${COLORS[NC]}$staked_balance."
     full_balance=$(/home/mike/tezos/octez-client get full balance for "$address")
     echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$full_balance."
+    unstake_requests=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$address/unstake_requests/)
+    echo -e "${COLORS[GREEN]}Unstake requests : \n ${COLORS[PURPLE]}$unstake_requests.${COLORS[NC]}"
+    unstaked_finalizable_balance=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$address/unstaked_finalizable_balance/)
+    echo -e "${COLORS[GREEN]}unstaked_finalizable_balance : \n ${COLORS[PURPLE]}$unstaked_finalizable_balance ${COLORS[NC]}"
+    unstaked_frozen_balance=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$address/unstaked_frozen_balance/)
+    echo -e "${COLORS[GREEN]}unstaked_frozen_balance  : \n ${COLORS[PURPLE]}$unstaked_frozen_balance ${COLORS[NC]}"
 done
 
 # Get the contract staked balance
@@ -26,7 +32,6 @@ contract_staked_balance=$(./octez-admin-client rpc get /chains/main/blocks/head/
 echo $contract_staked_balance | jq
 
 # Print the balance of the baker address
-baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
 echo -e "\n${COLORS[PURPLE]}Baker: ${COLORS[YELLOW]}$baker_address${COLORS[NC]}"
 baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
 echo -e "${COLORS[GREEN]}Liquid balance: ${COLORS[NC]}$baker_balance."
@@ -34,6 +39,12 @@ baker_staked_balance=$(/home/mike/tezos/octez-client get staked balance for "$ba
 echo -e "${COLORS[GREEN]}Staked balance: ${COLORS[NC]}$baker_staked_balance."
 baker_full_balance=$(/home/mike/tezos/octez-client get full balance for "$baker_address")
 echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$baker_full_balance."
+baker_unstake_requests=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$baker_address/unstake_requests/)
+echo -e "${COLORS[GREEN]}baker_unstake_requests : \n ${COLORS[PURPLE]}$baker_unstake_requests.${COLORS[NC]}"
+baker_unstaked_finalizable_balance=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$baker_address/unstaked_finalizable_balance/)
+echo -e "${COLORS[GREEN]}baker_unstaked_finalizable_balance : \n ${COLORS[PURPLE]}$baker_unstaked_finalizable_balance ${COLORS[NC]}"
+baker_unstaked_frozen_balance=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$baker_address/unstaked_frozen_balance/)
+echo -e "${COLORS[GREEN]}baker_unstaked_frozen_balance  : \n ${COLORS[PURPLE]}$baker_unstaked_frozen_balance ${COLORS[NC]}"
 
 # Get the baker delegation information
 echo -e "\n${COLORS[BLUE]}Baker Data${COLORS[NC]}"
@@ -76,15 +87,15 @@ echo $current_yearly_rate | jq
 
 current_yearly_rate_exact=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate_exact/)
 echo -e "\n${COLORS[PURPLE]}Current Yearly Rate Exact${COLORS[NC]}"
-echo $current_yearly_rate_exact | jq 
+echo $current_yearly_rate_exact | jq
 
 issuance_per_minute=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/issuance_per_minute)
 echo -e "\n${COLORS[PURPLE]}Issuance Per Minute${COLORS[NC]}"
-echo $issuance_per_minute | jq 
+echo $issuance_per_minute | jq
 
 expected_issuance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/expected_issuance)
 echo -e "\n${COLORS[PURPLE]}Expected Issuance${COLORS[NC]}"
-echo $expected_issuance | jq 
+echo $expected_issuance | jq
 
 # Fetch the baking rights for the current cycle for the specified Tezos address.
 # echo -e "\n${COLORS[PURPLE]}Baking Rights${COLORS[NC]}"
