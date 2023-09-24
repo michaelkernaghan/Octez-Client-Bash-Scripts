@@ -19,3 +19,5 @@ echo -e "\n${COLORS[BLUE]}Levels done this cycle: ${COLORS[YELLOW]}${cycle_posit
 echo -e "${COLORS[BLUE]}Levels to next cycle: ${COLORS[YELLOW]}${levels_to_next_cycle}${COLORS[NC]}"
 echo -e "\n${COLORS[BLUE]}Minutes to next cycle: ${COLORS[PURPLE]}${minutes_to_next_cycle}${COLORS[NC]}"
 echo -e "${COLORS[BLUE]}Hours to next cycle: ${COLORS[PURPLE]}${hours_to_next_cycle}${COLORS[NC]}"
+adaptive_issuance_launch_cycle=$(./octez-admin-client rpc get /chains/main/blocks/head/context/adaptive_issuance_launch_cycle)
+echo -e "${COLORS[BLUE]}Cycle at which the launch of the Adaptive Issuance feature is set to happen: ${COLORS[YELLOW]}${adaptive_issuance_launch_cycle}${COLORS[NC]}"

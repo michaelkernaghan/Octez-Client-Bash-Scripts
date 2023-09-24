@@ -26,11 +26,6 @@ for address in "${staker_addresses[@]}"; do
     echo -e "${COLORS[GREEN]}unstaked_frozen_balance  : \n ${COLORS[PURPLE]}$unstaked_frozen_balance ${COLORS[NC]}"
 done
 
-# Get the contract staked balance
-echo -e "\n${COLORS[BLUE]}Contract Staked Balance for ${COLORS[YELLOW]}${staker_addresses[0]}${COLORS[NC]}"
-contract_staked_balance=$(./octez-admin-client rpc get /chains/main/blocks/head/context/contracts/${staker_addresses[0]}/staked_balance)
-echo $contract_staked_balance | jq
-
 # Print the balance of the baker address
 echo -e "\n${COLORS[PURPLE]}Baker: ${COLORS[YELLOW]}$baker_address${COLORS[NC]}"
 baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
@@ -68,7 +63,7 @@ echo $total_frozen_stake | jq
 
 # Get the adaptive_issuance_launch_cycle
 echo -e "\n${COLORS[PURPLE]}adaptive_issuance_launch_cycle${COLORS[NC]}"
-active_staking_parameters=$(./octez-admin-client rpc get /chains/main/blocks/head/context/adaptive_issuance_launch_cycle)
+adaptive_issuance_launch_cycle=$(./octez-admin-client rpc get /chains/main/blocks/head/context/adaptive_issuance_launch_cycle)
 echo $adaptive_issuance_launch_cycle | jq
 
 # Get issuance data
