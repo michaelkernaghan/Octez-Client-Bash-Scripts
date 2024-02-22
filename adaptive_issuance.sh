@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/zsh
 # ----------------------------------------------------------
 # adaptive_issuance.sh
 # Michael Kernaghan
@@ -12,11 +12,11 @@ cd $HOME/tezos/
 # Print the balances of the staker addresses
 for address in "${staker_addresses[@]}"; do
     echo -e "\n${COLORS[YELLOW]}$address${COLORS[NC]}"
-    balance=$(/home/mike/tezos/octez-client get balance for "$address")
+    balance=$(./octez-client get balance for "$address")
     echo -e "${COLORS[GREEN]}Liquid balance: ${COLORS[NC]}$balance."
-    staked_balance=$(/home/mike/tezos/octez-client get staked balance for "$address")
+    staked_balance=$(./octez-client get staked balance for "$address")
     echo -e "${COLORS[GREEN]}Staked balance: ${COLORS[NC]}$staked_balance."
-    full_balance=$(/home/mike/tezos/octez-client get full balance for "$address")
+    full_balance=$(./octez-client get full balance for "$address")
     echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$full_balance."
     unstake_requests=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$address/unstake_requests/)
     echo -e "${COLORS[GREEN]}Unstake requests : \n ${COLORS[PURPLE]}$unstake_requests.${COLORS[NC]}"
@@ -28,11 +28,11 @@ done
 
 # Print the balance of the baker address
 echo -e "\n${COLORS[PURPLE]}Baker: ${COLORS[YELLOW]}$baker_address${COLORS[NC]}"
-baker_balance=$(/home/mike/tezos/octez-client get balance for "$baker_address")
+baker_balance=$(./octez-client get balance for "$baker_address")
 echo -e "${COLORS[GREEN]}Liquid balance: ${COLORS[NC]}$baker_balance."
-baker_staked_balance=$(/home/mike/tezos/octez-client get staked balance for "$baker_address")
+baker_staked_balance=$(./octez-client get staked balance for "$baker_address")
 echo -e "${COLORS[GREEN]}Staked balance: ${COLORS[NC]}$baker_staked_balance."
-baker_full_balance=$(/home/mike/tezos/octez-client get full balance for "$baker_address")
+baker_full_balance=$(./octez-client get full balance for "$baker_address")
 echo -e "${COLORS[GREEN]}Full balance :  ${COLORS[NC]}$baker_full_balance."
 baker_unstake_requests=$(./octez-client rpc get /chains/main/blocks/head/context/contracts/$baker_address/unstake_requests/)
 echo -e "${COLORS[GREEN]}baker_unstake_requests : \n ${COLORS[PURPLE]}$baker_unstake_requests.${COLORS[NC]}"
@@ -80,9 +80,9 @@ current_yearly_rate=$(./octez-admin-client rpc get /chains/main/blocks/head/cont
 echo -e "\n${COLORS[PURPLE]}Current Yearly Rate${COLORS[NC]}"
 echo $current_yearly_rate | jq
 
-current_yearly_rate_exact=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate_exact/)
-echo -e "\n${COLORS[PURPLE]}Current Yearly Rate Exact${COLORS[NC]}"
-echo $current_yearly_rate_exact | jq
+current_yearly_rate_details=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/current_yearly_rate_details/)
+echo -e "\n${COLORS[PURPLE]}Current Yearly Rate Details${COLORS[NC]}"
+echo $current_yearly_rate_details | jq
 
 issuance_per_minute=$(./octez-admin-client rpc get /chains/main/blocks/head/context/issuance/issuance_per_minute)
 echo -e "\n${COLORS[PURPLE]}Issuance Per Minute${COLORS[NC]}"
@@ -107,3 +107,35 @@ echo $expected_issuance | jq
 # next_baking_rights=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/helpers/baking_rights\?cycle=${next_cycle}\&delegate=${baker_address}\&max_round=0 | jq 'map({level: .level})')
 # echo -e "\n${COLORS[BLUE]}Cycle ${COLORS[RED]}${next_cycle}${COLORS[BLUE]} for baker ${COLORS[YELLOW]}${baker_address}${COLORS[BLUE]}: \n${COLORS[NC]}${next_baking_rights}"
 # fi
+
+# Extract the 'baking_reward_bonus_per_slot' for the last two cycles
+baking_reward_fixed_portion=$(echo "$expected_issuance" | jq '.[-1].baking_reward_fixed_portion | tonumber')
+baking_reward_fixed_portion_second_last=$(echo "$expected_issuance" | jq '.[-2].baking_reward_fixed_portion | tonumber')
+
+echo -e "\n${COLORS[BLUE]}baking_reward_fixed_portion ${COLORS[YELLOW]}${baking_reward_fixed_portion}${COLORS[NC]}"
+echo -e "\n${COLORS[BLUE]}baking_reward_fixed_portion_second_last ${COLORS[YELLOW]}${baking_reward_fixed_portion_second_last}${COLORS[NC]}"
+
+# Ensure arithmetic operations are correctly handled
+if [[ $baking_reward_fixed_portion_second_last -ne 0 ]]; then
+    # Calculate the percentage rate of increase
+    rate_of_increase=$(echo "scale=2; 100 * ($baking_reward_fixed_portion - $baking_reward_fixed_portion_second_last) / $baking_reward_fixed_portion_second_last" | bc)
+    echo "${COLORS[BLUE]}Percentage rate of increase of baking_reward_fixed_portion:${COLORS[YELLOW]} $rate_of_increase%${COLORS[NC]}"
+else
+    echo "Cannot calculate percentage increase due to division by zero"
+fi
+
+# Make sure these commands return JSON; you might need to add a flag or process the output differently
+total_frozen_stake_output=$(./octez-admin-client rpc get /chains/main/blocks/head/context/total_frozen_stake)
+total_supply_output=$(./octez-admin-client rpc get /chains/main/blocks/head/context/total_supply)
+
+# Assuming the outputs are valid JSON, we directly parse them
+total_frozen_stake=$(echo "$total_frozen_stake_output" | jq '. | tonumber')
+total_supply=$(echo "$total_supply_output" | jq '. | tonumber')
+
+# Check and calculate as before
+if (( $(echo "$total_supply > 0" | bc -l) )); then
+    staked_funds_ratio=$(echo "scale=4; $total_frozen_stake / $total_supply" | bc)
+    echo "${COLORS[BLUE]}Staked funds ratio:${COLORS[YELLOW]} $staked_funds_ratio${COLORS[NC]}"
+else
+    echo "Invalid total_supply value: $total_supply"
+fi
