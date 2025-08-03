@@ -77,12 +77,74 @@ staker_addresses=(
 )
 ```
 
-### 3. Test Compatibility
+### 3. Node Configuration
+
+The scripts require access to a Tezos node. Choose one of these options:
+
+#### Option A: Local Node (Recommended for Bakers)
+**Run your own Tezos node locally:**
+
+```bash
+# Download and run Octez node
+# Replace with latest Octez version if needed
+wget https://github.com/tezos/tezos/releases/download/latest/octez-binaries-x86_64.tar.gz
+tar -xf octez-binaries-x86_64.tar.gz
+export PATH=$PWD:$PATH
+
+# Initialize and start the node
+octez-node config init --data-dir ~/.tezos-node --network mainnet
+octez-node run --data-dir ~/.tezos-node --rpc-addr 127.0.0.1:8732
+```
+
+**Advantages:**
+- Full control and privacy
+- Better performance for baking operations
+- No dependency on external services
+- Required for secure baking
+
+#### Option B: Remote Node (For Monitoring Only)
+**Use public RPC endpoints (NOT for baking):**
+
+```bash
+# Configure octez-client to use remote endpoint
+octez-client --endpoint https://mainnet.api.tez.ie config update
+
+# Or use other public endpoints:
+# octez-client --endpoint https://rpc.tzbeta.net config update
+# octez-client --endpoint https://mainnet.smartpy.io config update
+```
+
+**⚠️ Important:** Only use remote nodes for monitoring and analysis. **Never use remote nodes for baking** as it compromises security and control.
+
+#### Option C: Custom Remote Node
+**Connect to your own remote node:**
+
+```bash
+# Configure for custom remote node
+octez-client --endpoint http://your-node-ip:8732 config update
+
+# Or with authentication
+octez-client --endpoint https://your-node-domain.com config update
+```
+
+#### Verify Node Connection
+```bash
+# Test connection
+octez-client rpc get /chains/main/blocks/head/helpers/current_level
+
+# Check node sync status
+octez-client rpc get /chains/main/blocks/head/header
+
+# View current configuration
+octez-client config show
+```
+
+### 4. Test Compatibility
 ```bash
 ./test-compatibility.sh
 ```
 
-### 4. Run Scripts
+### 5. Run Scripts
 ```bash
 # Monitor adaptive issuance
 ./adaptive_issuance.sh
