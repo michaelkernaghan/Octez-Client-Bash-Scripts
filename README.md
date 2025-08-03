@@ -220,7 +220,14 @@ chmod +x *.sh
 
 ## 🤖 AI Assistant Prompt
 
-Copy and paste this prompt into a **Claude Sonnet session** to get personalized help with this repository:
+**How to Use:**
+1. **Open this repository in Cursor workspace** (essential for optimal assistance)
+2. Copy the entire prompt below
+3. Paste it into a new Claude Sonnet conversation in Cursor
+4. Replace `[DESCRIBE YOUR SPECIFIC QUESTION OR TASK HERE]` with your actual question
+5. Get personalized assistance tailored to this repository!
+
+**Copy and paste this prompt:**
 
 ```
 I'm working with the Octez-Client-Bash-Scripts repository, a comprehensive collection of Bash scripts for managing Tezos baking operations with Seoul protocol compatibility. 
@@ -281,13 +288,6 @@ Some examples of what I might need help with:
 - Setting up native multisig accounts
 - Migrating from Oxford protocol configurations
 ```
-
-**How to Use:**
-1. **Open this repository in Cursor workspace** (essential for optimal assistance)
-2. Copy the entire prompt above
-3. Paste it into a new Claude Sonnet conversation in Cursor
-4. Replace `[DESCRIBE YOUR SPECIFIC QUESTION OR TASK HERE]` with your actual question
-5. Get personalized assistance tailored to this repository!
 
 ## 📚 Documentation
 
