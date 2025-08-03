@@ -17,14 +17,14 @@ if [ ! -f $baker_output_file ]; then
 fi
 
 cycle=$(./octez-admin-client rpc get /chains/main/blocks/head | jq .metadata.level_info.cycle)
-level=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/header | jq '.level')
+level=$(octez-client rpc get /chains/main/blocks/head/header | jq '.level')
 
 for address in "${staker_addresses[0]}"; do
-    staked_balance=$(/home/mike/tezos/octez-client get staked balance for "$address")
+    staked_balance=$(octez-client get staked balance for "$address")
     echo "$cycle, $level, $address, $staked_balance" >>$staker_output_file
 done
 
-baker_staked_balance=$(/home/mike/tezos/octez-client get staked balance for "$baker_address")
+baker_staked_balance=$(octez-client get staked balance for "$baker_address")
 echo "$cycle, $level, $baker_address, $baker_staked_balance" >>$baker_output_file
 
 echo -e "\n${COLORS[PURPLE]}Staker Staking Balance History${COLORS[NC]}"

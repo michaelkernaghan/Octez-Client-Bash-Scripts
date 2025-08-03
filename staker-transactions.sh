@@ -20,7 +20,7 @@ source ./common.sh
 staker_address="tz1XDL5EuVrKXxa6bawcA7oRfLBgvH2uWtWi"
 
 # Fetch the current head block level. The head block is the most recent block in the Tezos blockchain.
-head_level=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/header | jq '.level')
+head_level=$(octez-client rpc get /chains/main/blocks/head/header | jq '.level')
 
 # Calculate the start level. We are interested in the last 250 blocks, so we subtract 50 from the head level.
 start_level=$((head_level - 250))
@@ -41,10 +41,10 @@ for ((level = head_level; level >= start_level; level--)); do
     echo -e "${COLORS[BLUE]}Level: $level${COLORS[NC]}"
 
     # Get the block hash for the current level. The block hash is a unique identifier for each block.
-    block_hash=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/$level/hash | tr -d '"')
+    block_hash=$(octez-client rpc get /chains/main/blocks/$level/hash | tr -d '"')
 
     # Fetch all operations in the current block. Operations include transactions, but also other types of actions on the Tezos network.
-    operations=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/$block_hash/operations)
+    operations=$(octez-client rpc get /chains/main/blocks/$block_hash/operations)
 
     # Parse the operations to filter out transactions related to our address of interest. We use the 'grep' command to search for our address in the operations data.
     transactions=$(echo "$operations" | grep -A18 "$staker_address" --no-group-separator)

@@ -4,7 +4,7 @@ cd $HOME/tezos/
 
 baker_address="tz1hyVeFrkoDG1eFTaQZoYKC93hGUdRVes4D"
 
-level1=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/header | jq '.level')
+level1=$(octez-client rpc get /chains/main/blocks/head/header | jq '.level')
 
 # Get the baker delegation information
 echo -e "\n${COLORS[BLUE]}Baker Data at level ${COLORS[RED]}${level1}${COLORS[NC]}"
@@ -15,7 +15,7 @@ echo "$response1" | jq
 sleep 40
 
 # Second call
-level2=$(/home/mike/tezos/octez-client rpc get /chains/main/blocks/head/header | jq '.level')
+level2=$(octez-client rpc get /chains/main/blocks/head/header | jq '.level')
 # Get the baker delegation information
 echo -e "\n${COLORS[BLUE]}Baker Data at level ${COLORS[RED]}${level2}${COLORS[NC]}"
 response2=$(./octez-admin-client rpc get /chains/main/blocks/head/context/delegates/${baker_address}/)
