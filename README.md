@@ -283,10 +283,11 @@ Some examples of what I might need help with:
 ```
 
 **How to Use:**
-1. Copy the entire prompt above
-2. Paste it into a new Claude Sonnet conversation
-3. Replace `[DESCRIBE YOUR SPECIFIC QUESTION OR TASK HERE]` with your actual question
-4. Get personalized assistance tailored to this repository!
+1. **Open this repository in Cursor workspace** (essential for optimal assistance)
+2. Copy the entire prompt above
+3. Paste it into a new Claude Sonnet conversation in Cursor
+4. Replace `[DESCRIBE YOUR SPECIFIC QUESTION OR TASK HERE]` with your actual question
+5. Get personalized assistance tailored to this repository!
 
 ## 📚 Documentation
 
